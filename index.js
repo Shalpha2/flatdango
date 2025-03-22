@@ -1,14 +1,13 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // DOM Elements
+    
     const movieDetails = document.querySelector("#movie-details");
     const filmsList = document.querySelector("#films");
     const buyTicketButton = document.querySelector("#buy-ticket");
   
-    // URLs
     const filmsUrl = "http://localhost:3000/films";
     const firstMovieUrl = "http://localhost:3000/films/1";
   
-    // Fetch and display the first movie's details
+    // Fetch and display
     function fetchFirstMovie() {
       fetch(firstMovieUrl)
         .then((response) => response.json())
@@ -24,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
         .catch((error) => console.error("Error fetching all movies:", error));
     }
   
-    // Render movie details
+    // display
     function renderMovieDetails(movie) {
       const availableTickets = movie.capacity - movie.tickets_sold;
   
