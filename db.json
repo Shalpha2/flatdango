@@ -106,7 +106,7 @@
       "runtime": "104",
       "capacity": 30,
       "showtime": "06:00PM",
-      "tickets_sold": 14,
+      "tickets_sold": 18,
       "description": "A group of swingin' teens take time out from having fun in the sun to try to foil a group of crooks searching for a stolen scroll.",
       "poster": "https://www.gstatic.com/tv/thumb/v22vodart/58122/p58122_v_v8_aa.jpg"
     },
@@ -140,6 +140,28 @@
       "tickets_sold": 34,
       "description": "Delinquent teen-agers ingest a substance and grow thirty feet tall, then proceed to take over a small town.",
       "poster": "https://www.gstatic.com/tv/thumb/v22vodart/37991/p37991_v_v8_aa.jpg"
+    }
+  ],
+  "tickets": [
+    {
+      "id": "0867",
+      "film_id": "11",
+      "number_of_tickets": 1
+    },
+    {
+      "id": "8d5d",
+      "film_id": "11",
+      "number_of_tickets": 1
+    },
+    {
+      "id": "f191",
+      "film_id": "11",
+      "number_of_tickets": 1
+    },
+    {
+      "id": "645b",
+      "film_id": "11",
+      "number_of_tickets": 1
     }
   ]
 }
