@@ -1,15 +1,15 @@
 
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #f4f4f4;
+    background-color: #dd3c3c;
     margin: 0;
-    padding: 0;
+    padding: 2px;
     color: #333;
   }
   
   #container {
     display: flex;
-    max-width: 1200px;
+    max-width: 700px;
     margin: 20px auto;
     padding: 20px;
     background-color: #fff;
@@ -20,6 +20,7 @@ body {
   #movie-details {
     width: 70%;
     padding: 20px;
+
   }
   
   #movie-details img {
@@ -45,8 +46,8 @@ body {
   }
   
   #buy-ticket {
-    background-color: #3498db;
-    color: #fff;
+    background-color: #174f77;
+    color: #c25252;
     border: none;
     padding: 10px 20px;
     font-size: 1rem;
@@ -56,19 +57,19 @@ body {
   }
   
   #buy-ticket:disabled {
-    background-color: #bdc3c7;
+    background-color: #4c9ad9;
     cursor: not-allowed;
   }
   
   #buy-ticket.sold-out {
-    background-color: #e74c3c;
+    background-color: #1c6d15;
   }
   
   #films {
     width: 30%;
     padding: 20px;
     list-style: none;
-    border-left: 1px solid #ddd;
+    border-left: 1px solid #e4dbdb;
   }
   
   #films li {
