@@ -1,34 +1,28 @@
 document.addEventListener("DOMContentLoaded", () => {
     
   const movieDetails = document.querySelector("#movie-details");
+  //console.log(movieDetails)
   const filmsList = document.querySelector("#films");
   const buyTicketButton = document.querySelector("#buy-ticket");
 
-  const filmsUrl = "http://localhost:3000/films";
-  const firstMovieUrl = "http://localhost:3000/films/1";
 
-  
   function fetchFirstMovie() {
       //console.log (fetchFirstMovie)
-    fetch(firstMovieUrl)
+    fetch("http://localhost:3000/films/1")
       .then((response) => response.json())
       .then((movie) =>{ console.log (movie)
            renderMovieDetails(movie) })
-      
-      .catch((error) => console.error("Error fetching first movie:", error));
   }
 
-  
   function fetchAllMovies() {
       //console.log(fetchAllMovies)
-    fetch(filmsUrl)
+    fetch("http://localhost:3000/films")
       .then((response) => response.json())
       .then((movies) =>{ console.log(movies)
           renderMovieMenu(movies)})
-      .catch((error) => console.error("Error fetching all movies:", error));
+     
   }
 
-  // display
   function renderMovieDetails(movie) {
     const availableTickets = movie.capacity - movie.tickets_sold;
     console.log(`Rendering details for "${movie.title}" (Available: ${availableTickets})`);
@@ -39,7 +33,6 @@ document.addEventListener("DOMContentLoaded", () => {
     movieDetails.querySelector("#available-tickets").textContent = `Available Tickets: ${availableTickets}`;
     movieDetails.querySelector("#description").textContent = movie.description;
 
-    // Update Buy Ticket button
     if (availableTickets === 0) {
       buyTicketButton.textContent = "Sold Out";
       buyTicketButton.disabled = true;
@@ -48,7 +41,6 @@ document.addEventListener("DOMContentLoaded", () => {
       buyTicketButton.disabled = false;
     }
 
-    // Add event listener 
     buyTicketButton.onclick = () => buyTicket(movie);
   }
 
@@ -59,40 +51,35 @@ document.addEventListener("DOMContentLoaded", () => {
       const li = document.createElement("li");
       li.textContent = movie.title;
      li.classList.add("film", "item")
-
+//console.log(li)
       if (movie.capacity - movie.tickets_sold === 0) {
         li.classList.add("sold-out");
       }
 
-      
       const deleteButton = document.createElement("button");
+     // console.log(deleteButton)
       deleteButton.textContent = "Delete";
       deleteButton.addEventListener("click", () => deleteMovie(movie.id, li));
          // console.log(`Deleting movie: ${movie.title} (ID: ${movie.id})`);
           
-
       li.appendChild(deleteButton);
       filmsList.appendChild(li);
-
+//console.log(filmsList)
       li.addEventListener("click", () => {
-        fetch(`${filmsUrl}/${movie.id}`)
+        fetch(`${"http://localhost:3000/films"}/${movie.id}`)
           .then((response) => response.json())
           .then((movie) =>{ console.log(movie)
               renderMovieDetails(movie)
           })
-          .catch((error) => console.error("Error fetching movie details:", error));
       });
     });
   }
-
-  
   function buyTicket(movie) {
     const updatedTicketsSold = movie.tickets_sold + 1;
     const availableTickets = movie.capacity - updatedTicketsSold;
-
+//console.log(availableTickets)
     if (availableTickets >= 0) {
-      
-      fetch(`${filmsUrl}/${movie.id}`, {
+      fetch(`${"http://localhost:3000/films"}/${movie.id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -117,21 +104,20 @@ document.addEventListener("DOMContentLoaded", () => {
             .then((data) => console.log("Ticket posted:", data))
             .catch((error) => console.error("Error posting ticket:", error));
         })
-        .catch((error) => console.error("Error updating tickets:", error));
+      
     }
   }
     
     
-  
   function deleteMovie(movieId, li) {
-    fetch(`${filmsUrl}/${movieId}`, {
+    fetch(`${"http://localhost:3000/films"}/${movieId}`, {
       method: "DELETE",
     })
-      .then(() => li.remove())
-      .catch((error) => console.error("Error deleting movie:", error));
+      .then(() =>console.log(li.remove()))
+
+   
   }
 
-  // Initialize  app
   fetchFirstMovie();
   fetchAllMovies();
 });
