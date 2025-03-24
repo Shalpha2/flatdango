@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const buyTicketButton = document.querySelector("#buy-ticket");
 
 
-  function fetchFirstMovie() {
+  function getFirstMovie() {
       //console.log (fetchFirstMovie)
     fetch("http://localhost:3000/films/1")
       .then((response) => response.json())
@@ -14,9 +14,14 @@ document.addEventListener("DOMContentLoaded", () => {
            renderMovieDetails(movie) })
   }
 
-  function fetchAllMovies() {
+  function getAllMovies() {
       //console.log(fetchAllMovies)
-    fetch("http://localhost:3000/films")
+    fetch("http://localhost:3000/films",{
+    method: "GET",
+    headers : {
+      "Accept" : "application/json"
+    }
+   })
       .then((response) => response.json())
       .then((movies) =>{ console.log(movies)
           renderMovieMenu(movies)})
@@ -25,14 +30,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function renderMovieDetails(movie) {
     const availableTickets = movie.capacity - movie.tickets_sold;
-    console.log(`Rendering details for "${movie.title}" (Available: ${availableTickets})`);
+    buyTicketButton.onclick = () => buyTicket(movie);
+   
+    const movieData= {
+      "#title": movie.title,
+      "#runtime": `${movie.runtime} minutes`,
+      "#showtime": `Showtime: ${movie.showtime}`,
+      "#available-tickets": `Available Tickets: ${movie.capacity - movie.tickets_sold}`,
+      "#description": movie.description,
+    };
+    
+    for (let key in movieData) {
+      movieDetails.querySelector(key).textContent = movieData[key];
+    }
+    
     movieDetails.querySelector("#poster").src = movie.poster;
-    movieDetails.querySelector("#title").textContent = movie.title;
-    movieDetails.querySelector("#runtime").textContent = `${movie.runtime} minutes`;
-    movieDetails.querySelector("#showtime").textContent = `Showtime: ${movie.showtime}`;
-    movieDetails.querySelector("#available-tickets").textContent = `Available Tickets: ${availableTickets}`;
-    movieDetails.querySelector("#description").textContent = movie.description;
-
+  
     if (availableTickets === 0) {
       buyTicketButton.textContent = "Sold Out";
       buyTicketButton.disabled = true;
@@ -41,7 +54,6 @@ document.addEventListener("DOMContentLoaded", () => {
       buyTicketButton.disabled = false;
     }
 
-    buyTicketButton.onclick = () => buyTicket(movie);
   }
 
   function renderMovieMenu(movies) {
@@ -101,8 +113,8 @@ document.addEventListener("DOMContentLoaded", () => {
             }),
           })
             .then((response) => response.json())
-            .then((data) => console.log("Ticket posted:", data))
-            .catch((error) => console.error("Error posting ticket:", error));
+            .then((data) => console.log(data))
+        
         })
       
     }
@@ -118,7 +130,7 @@ document.addEventListener("DOMContentLoaded", () => {
    
   }
 
-  fetchFirstMovie();
-  fetchAllMovies();
+  getFirstMovie();
+  getAllMovies();
 });
 
